@@ -1,9 +1,9 @@
 <?php
 // -----
 // Part of the "GA4 Analytics" plugin, created by lat9 (https://vinosdefrutastropicales.com)
-// Copyright (c) 2022-2023, Vinos de Frutas Tropicales.
+// Copyright (c) 2022-2024, Vinos de Frutas Tropicales.
 //
-// Last updated: v1.2.3
+// Last updated: v1.2.4
 //
 // Based on:
 /**
@@ -685,7 +685,12 @@ class ga4_analytics extends base
         $categories = [];
         $category_suffix = 1;
         foreach ($cPath_array as $categories_id) {
-            $categories['item_category' . (($category_suffix === 1) ? '' : $category_suffix)] = zen_get_category_name($categories_id, $_SESSION['languages_id']);
+            $category_name = zen_get_category_name($categories_id, $_SESSION['languages_id']);
+            if ($category_name === '') {
+                continue;
+            }
+
+            $categories['item_category' . (($category_suffix === 1) ? '' : $category_suffix)] = $category_name;
             $category_suffix++;
             if ($category_suffix > 5) {
                 break;
